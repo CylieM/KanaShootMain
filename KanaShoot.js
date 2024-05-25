@@ -68,16 +68,12 @@ var gameStarted = false;
 var wordIndex = 0;
 
 function setup() {
+
   createCanvas(500, 500);
   planetCrust = randomColor();
   planetMantle = randomColor();
   ship = randomColor();
-  field.push(new Asteroid(random(width - 150) + 75, 0, WAVE_DATA[currentWave][wordIndex], randomColor()));
-  wordIndex++;
-  asteroidsDisplayed++;
-  focus = null;
-
-  // Add event listener to hidden input field for keydown event
+	  // Add event listener to hidden input field for keydown event
   document.getElementById("hiddenInput").addEventListener("keydown", function(event) {
     // Extract the pressed key from the event
     var keyPressed = event.key;
@@ -88,6 +84,12 @@ function setup() {
     // Call handleInput function to process the key press
     handleInput(keyPressed);
   });
+  field.push(new Asteroid(random(width - 150) + 75, 0, WAVE_DATA[currentWave][wordIndex], randomColor()));
+  wordIndex++;
+  asteroidsDisplayed++;
+  focus = null;
+
+
 }
 
 
