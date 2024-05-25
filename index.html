@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>KanaShoot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *
+        {
+            padding: 0;
+            margin: 0;
+        }
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+    <input type="text" id="hiddenInput" style="opacity: 0; position: absolute; top: -1000px; left: -1000px;">
+    <button id="startButton" style="position: absolute; top: 50%; left: 50%;">Tap to Start</button>
+
+    <script type="text/javascript" src="lib/p5min.js"></script>
+    <script type="text/javascript" src="Asteroid.js"></script>
+    <script type="text/javascript" src="KanaShoot.js"></script>
+<script>
+    // Move this part outside the startButton click event handler
+    var hiddenInput = document.getElementById('hiddenInput');
+    hiddenInput.addEventListener('input', handleInput); // Add event listener for input event
+    hiddenInput.addEventListener('keydown', function(event) {
+      var keyPressed = event.key;
+      handleInput(keyPressed);
+    });
+
+    document.getElementById('startButton').addEventListener('click', function() {
+      startGame();
+      hiddenInput.focus(); // Focus the hidden input to bring up the keyboard
+      hiddenInput.value = ''; // Clear the input field
+      document.getElementById('startButton').style.display = 'none'; // Hide the start button
+    });
+  </script>
+
+</body>
+</html>
