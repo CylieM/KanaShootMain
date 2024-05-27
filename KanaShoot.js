@@ -84,7 +84,6 @@ function setup() {
     // Call handleInput function to process the key press
     handleInput(keyPressed);
   });
-  field.push(new Asteroid(random(width - 150) + 75, 0, WAVE_DATA[currentWave][wordIndex], randomColor()));
   wordIndex++;
   asteroidsDisplayed++;
   focus = null;
