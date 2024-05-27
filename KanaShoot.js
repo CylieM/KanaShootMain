@@ -215,10 +215,15 @@ function handleInput(event) {
   }
   
   function endGame() {
-	  noLoop();
-	  fill(255);
-	  noStroke();
-	  textAlign(CENTER);
-	  textSize(19);
-	  text("Game Over! You reached wave " + currentWave + " with a score of " + score, width / 2, height / 2);
-	}
+    noLoop();
+    fill(255);
+    noStroke();
+    textAlign(CENTER);
+    textSize(19);
+    text("Game Over! You reached wave " + currentWave + " with a score of " + score, width / 2, height / 2);
+    
+    // Call the Android method to send the final wave and score
+    if (typeof Android !== 'undefined' && Android !== null) {
+        Android.onGameEnded(currentWave, score);
+    }
+}
