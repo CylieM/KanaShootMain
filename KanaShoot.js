@@ -222,8 +222,6 @@ function handleInput(event) {
     textSize(19);
     text("Game Over! You reached wave " + currentWave + " with a score of " + score, width / 2, height / 2);
     
-    // Call the Android method to send the final wave and score
-    if (typeof Android !== 'undefined' && Android !== null) {
+
         Android.onGameEnded(currentWave, score);
-    }
 }
