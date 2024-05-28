@@ -1,58 +1,58 @@
 const WAVE_DATA = [
-	[
-	  { kana: "あ", romaji: "a" },
-	  { kana: "い", romaji: "i" },
-	  { kana: "う", romaji: "u" },
-	  { kana: "え", romaji: "e" },
-	  { kana: "お", romaji: "o" },
-	  { kana: "か", romaji: "ka" },
-	  { kana: "き", romaji: "ki" },
-	  { kana: "く", romaji: "ku" },
-	  { kana: "け", romaji: "ke" },
-	  { kana: "こ", romaji: "ko" },
-	  // ... add more hiragana characters here ...
-	],
-	[
-	  { kana: "ア", romaji: "a" },
-	  { kana: "イ", romaji: "i" },
-	  { kana: "ウ", romaji: "u" },
-	  { kana: "エ", romaji: "e" },
-	  { kana: "オ", romaji: "o" },
-	  { kana: "カ", romaji: "ka" },
-	  { kana: "キ", romaji: "ki" },
-	  { kana: "ク", romaji: "ku" },
-	  { kana: "ケ", romaji: "ke" },
-	  { kana: "コ", romaji: "ko" },
-	  // ... add more katakana characters here ...
-	],
-	[
-	  { kana: "かい", romaji: "kai" },
-	  { kana: "ひと", romaji: "hito" },
-	  { kana: "つき", romaji: "tsuki" },
-	  { kana: "ねこ", romaji: "neko" },
-	  { kana: "いぬ", romaji: "inu" },
-	  { kana: "さか", romaji: "saka" },
-	  { kana: "みず", romaji: "mizu" },
-	  { kana: "はな", romaji: "hana" },
-	  { kana: "ゆき", romaji: "yuki" },
-	  { kana: "くも", romaji: "kumo" },
-	  // ... add more two-character hiragana words here ...
-	],
-	[
-	  { kana: "カイ", romaji: "kai" },
-	  { kana: "ヒト", romaji: "hito" },
-	  { kana: "ツキ", romaji: "tsuki" },
-	  { kana: "ネコ", romaji: "neko" },
-	  { kana: "イヌ", romaji: "inu" },
-	  { kana: "サカ", romaji: "saka" },
-	  { kana: "ミズ", romaji: "mizu" },
-	  { kana: "ハナ", romaji: "hana" },
-	  { kana: "ユキ", romaji: "yuki" },
-	  { kana: "クモ", romaji: "kumo" },
-	  // ... add more two-character katakana words here ...
-	]
-  ];
-  
+    [
+        { kana: "あ", romaji: "a" },
+        { kana: "い", romaji: "i" },
+        { kana: "う", romaji: "u" },
+        { kana: "え", romaji: "e" },
+        { kana: "お", romaji: "o" },
+        { kana: "か", romaji: "ka" },
+        { kana: "き", romaji: "ki" },
+        { kana: "く", romaji: "ku" },
+        { kana: "け", romaji: "ke" },
+        { kana: "こ", romaji: "ko" },
+        // ... add more hiragana characters here ...
+    ],
+    [
+        { kana: "ア", romaji: "a" },
+        { kana: "イ", romaji: "i" },
+        { kana: "ウ", romaji: "u" },
+        { kana: "エ", romaji: "e" },
+        { kana: "オ", romaji: "o" },
+        { kana: "カ", romaji: "ka" },
+        { kana: "キ", romaji: "ki" },
+        { kana: "ク", romaji: "ku" },
+        { kana: "ケ", romaji: "ke" },
+        { kana: "コ", romaji: "ko" },
+        // ... add more katakana characters here ...
+    ],
+    [
+        { kana: "かい", romaji: "kai" },
+        { kana: "ひと", romaji: "hito" },
+        { kana: "つき", romaji: "tsuki" },
+        { kana: "ねこ", romaji: "neko" },
+        { kana: "いぬ", romaji: "inu" },
+        { kana: "さか", romaji: "saka" },
+        { kana: "みず", romaji: "mizu" },
+        { kana: "はな", romaji: "hana" },
+        { kana: "ゆき", romaji: "yuki" },
+        { kana: "くも", romaji: "kumo" },
+        // ... add more two-character hiragana words here ...
+    ],
+    [
+        { kana: "カイ", romaji: "kai" },
+        { kana: "ヒト", romaji: "hito" },
+        { kana: "ツキ", romaji: "tsuki" },
+        { kana: "ネコ", romaji: "neko" },
+        { kana: "イヌ", romaji: "inu" },
+        { kana: "サカ", romaji: "saka" },
+        { kana: "ミズ", romaji: "mizu" },
+        { kana: "ハナ", romaji: "hana" },
+        { kana: "ユキ", romaji: "yuki" },
+        { kana: "クモ", romaji: "kumo" },
+        // ... add more two-character katakana words here ...
+    ]
+];
+
 var focus; // Asteroid the player is currently typing out
 var field = [];
 var score = 0;
@@ -68,29 +68,25 @@ var gameStarted = false;
 var wordIndex = 0;
 
 function setup() {
+    createCanvas(500, 500);
+    planetCrust = randomColor();
+    planetMantle = randomColor();
+    ship = randomColor();
+    // Add event listener to hidden input field for keydown event
+    document.getElementById("hiddenInput").addEventListener("keydown", function(event) {
+        // Extract the pressed key from the event
+        var keyPressed = event.key;
 
-  createCanvas(500, 500);
-  planetCrust = randomColor();
-  planetMantle = randomColor();
-  ship = randomColor();
-	  // Add event listener to hidden input field for keydown event
-  document.getElementById("hiddenInput").addEventListener("keydown", function(event) {
-    // Extract the pressed key from the event
-    var keyPressed = event.key;
+        // Log the key press for debugging
+        console.log("Key pressed:", keyPressed);
 
-    // Log the key press for debugging
-    console.log("Key pressed:", keyPressed);
-
-    // Call handleInput function to process the key press
-    handleInput(keyPressed);
-  });
-  wordIndex++;
-  asteroidsDisplayed++;
-  focus = null;
-
-
+        // Call handleInput function to process the key press
+        handleInput(keyPressed);
+    });
+    wordIndex++;
+    asteroidsDisplayed++;
+    focus = null;
 }
-
 
 function startGame() {
     gameStarted = true;
@@ -159,62 +155,60 @@ function handleField() {
         }
     }
 }
-function handleInput(event) {
-  var key = event.data; // Get the last character entered
-  if (!gameStarted) return; // Add this line to prevent key handling before the game starts
 
-  if (focus) {
-    focus.erode(key.charCodeAt(0)); // Convert the character to a key code
-  } else {
-    focus = findAsteroid(key.charCodeAt(0), field); // Convert the character to a key code
+function handleInput(event) {
+    var key = event.data; // Get the last character entered
+    if (!gameStarted) return; // Add this line to prevent key handling before the game starts
+
     if (focus) {
-      focus.erode(key.charCodeAt(0)); // Convert the character to a key code
+        focus.erode(key.charCodeAt(0)); // Convert the character to a key code
+    } else {
+        focus = findAsteroid(key.charCodeAt(0), field); // Convert the character to a key code
+        if (focus) {
+            focus.erode(key.charCodeAt(0)); // Convert the character to a key code
+        }
     }
-  }
 }
 
+function drawBase() {
+    fill(planetMantle);
+    stroke(planetCrust);
+    strokeWeight(5);
+    rect(0, height - 15, width, height);
+    fill(ship);
+    stroke(255);
+    beginShape();
+    vertex(width / 2 - 20, height);
+    vertex(width / 2, height - 50);
+    vertex(width / 2 + 20, height);
+    endShape(CLOSE);
+}
 
-  
-  
-  function drawBase() {
-	fill(planetMantle);
-	stroke(planetCrust);
-	strokeWeight(5);
-	rect(0, height - 15, width, height);
-	fill(ship);
-	stroke(255);
-	beginShape();
-	vertex(width / 2 - 20, height);
-	vertex(width / 2, height - 50);
-	vertex(width / 2 + 20, height);
-	endShape(CLOSE);
-  }
-  
-  function drawLazer() {
-	if (!focus) return;
-	stroke(randomColor());
-	strokeWeight(focus.completedText.length);
-	line(width / 2, height - 50, focus.position.x, focus.position.y);
-	fill(255);
-	noStroke();
-	textAlign(LEFT);
-	textSize(30);
-	text(focus.completedText, 10, height - 40);
-  }
-  
-  function drawScore() {
-	textAlign(RIGHT);
-	noStroke();
-	textSize(30);
-	fill(255);
-	text(score, 50, height / 2);
-  }
-  
-  function randomColor() {
-	return color(random(255), random(255), random(255));
-  }
-  
-  function endGame() {
+function drawLazer() {
+    if (!focus) return;
+    stroke(randomColor());
+    strokeWeight(focus.completedText.length);
+    line(width / 2, height - 50, focus.position.x, focus.position.y);
+    fill(255);
+    noStroke();
+    textAlign(LEFT);
+    textSize(30);
+    text(focus.completedText, 10, height - 40);
+}
+
+function drawScore() {
+    textAlign(RIGHT);
+    noStroke();
+    textSize(30);
+    fill(255);
+    text(score, 50, height / 2);
+}
+
+function randomColor() {
+    return color(random(255), random(255), random(255));
+}
+
+function endGame() {
     noLoop();
     fill(255);
     noStroke();
@@ -222,6 +216,22 @@ function handleInput(event) {
     textSize(19);
     text("Game Over! You reached wave " + currentWave + " with a score of " + score, width / 2, height / 2);
     
+    // Display the Play Again and Quit buttons
+    document.getElementById('playAgainButton').style.display = 'block';
+    document.getElementById('quitButton').style.display = 'block';
 
-        Android.onGameEnded(currentWave, score);
+    Android.onGameEnded(currentWave, score);
+}
+
+function quitGame() {
+    // Hide buttons
+    document.getElementById('playAgainButton').style.display = 'none';
+    document.getElementById('quitButton').style.display = 'none';
+
+    // Show a quit message or redirect to another page if needed
+    fill(255);
+    noStroke();
+    textAlign(CENTER);
+    textSize(19);
+    text("Thank you for playing!", width / 2, height / 2 + 40);
 }
