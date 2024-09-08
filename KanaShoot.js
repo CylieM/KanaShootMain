@@ -162,35 +162,28 @@ function setup() {
     planetCrust = randomColor();
     planetMantle = randomColor();
     ship = randomColor();
-    // Add event listener to hidden input field for keydown event
     document.getElementById("hiddenInput").addEventListener("keydown", function(event) {
-        // Extract the pressed key from the event
         var keyPressed = event.key;
-
-        // Log the key press for debugging
         console.log("Key pressed:", keyPressed);
-
-        // Call handleInput function to process the key press
         handleInput(keyPressed);
     });
-    wordIndex++;
-    asteroidsDisplayed++;
-    focus = null;
 }
 
 function startGame() {
     gameStarted = true;
+    waveStartTime = millis();
+    waveDisplayStartTime = millis();
 }
 
 function draw() {
     if (!gameStarted) {
-        background(0); // Display a blank screen or instructions
+        background(0); 
         fill(255);
         textAlign(CENTER);
         textSize(32);
         text('Press "Start" to begin', width / 2, height / 4);
         text('make sure your screen fits properly', width / 2, height / 2);
-        return; // Exit the draw loop early
+        return; 
     }
 
     background(51);
@@ -198,23 +191,19 @@ function draw() {
     drawLazer();
     drawScore();
     handleField();
-    if (field.length === 0) {
-        if (asteroidsDisplayed >= WAVE_DATA[currentWave].length) {
-            // Move to the next wave if all asteroids have been displayed and destroyed
-            currentWave++;
-            asteroidsDisplayed = 1;
-            wordIndex = 0; // Reset word index for the next wave
-            waveDisplayStartTime = millis();
-            if (currentWave >= WAVE_DATA.length) {
-                // End the game if all waves are completed
-                textAlign(CENTER);
-                textSize(80);
-                text("Congrats! You completed the game!", width / 2, height / 2);
-                noLoop();
-            } else {
-                // Start the next wave
-                waveStartTime = millis();
-            }
+
+    if (field.length === 0 && asteroidsDisplayed >= WAVE_DATA[currentWave].length) {
+        currentWave++;
+        asteroidsDisplayed = 0;
+        wordIndex = 0;
+        waveDisplayStartTime = millis();
+        if (currentWave >= WAVE_DATA.length) {
+            textAlign(CENTER);
+            textSize(80);
+            text("Congrats! You completed the game!", width / 2, height / 2);
+            noLoop();
+        } else {
+            waveStartTime = millis();
         }
     }
 
@@ -236,9 +225,10 @@ function handleField() {
             field[i].draw();
         }
     }
+
     if (millis() - lastAsteroidTime > 2000 && millis() - waveStartTime < 20000) {
         lastAsteroidTime = millis();
-        if (asteroidsDisplayed <= WAVE_DATA[currentWave].length) {
+        if (asteroidsDisplayed < WAVE_DATA[currentWave].length) {
             field.push(new Asteroid(random(width - 150) + 75, 0, WAVE_DATA[currentWave][wordIndex], randomColor(), endGame));
             wordIndex++;
             asteroidsDisplayed++;
@@ -247,19 +237,17 @@ function handleField() {
 }
 
 function handleInput(event) {
-    var key = event.data; // Get the last character entered
-    if (!gameStarted) return; // Add this line to prevent key handling before the game starts
-
+    var key = event.data;
+    if (!gameStarted) return;
     if (focus) {
-        focus.erode(key.charCodeAt(0)); // Convert the character to a key code
+        focus.erode(key.charCodeAt(0));
     } else {
-        focus = findAsteroid(key.charCodeAt(0), field); // Convert the character to a key code
+        focus = findAsteroid(key.charCodeAt(0), field);
         if (focus) {
-            focus.erode(key.charCodeAt(0)); // Convert the character to a key code
+            focus.erode(key.charCodeAt(0));
         }
     }
 }
-
 function drawBase() {
     fill(planetMantle);
     stroke(planetCrust);
