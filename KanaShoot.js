@@ -322,7 +322,6 @@ function draw() {
         textAlign(CENTER);
         textSize(32);
         text('Press "Start" to begin', width / 2, height / 4);
-        text('make sure your screen fits properly', width / 2, height / 2);
         return;
     }
 
