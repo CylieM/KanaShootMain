@@ -283,7 +283,12 @@ function startNewWave() {
 
 // Setup function
 function setup() {
-    createCanvas(500, 500);
+    // Set canvas width and height to fit within the mobile screen
+    let canvasWidth = window.innerWidth * 0.9; // 90% of the screen width
+    let canvasHeight = window.innerHeight * 0.9; // 90% of the screen height
+    createCanvas(canvasWidth, canvasHeight);
+
+    // Initialize game elements
     planetCrust = randomColor();
     planetMantle = randomColor();
     ship = randomColor();
@@ -294,6 +299,14 @@ function setup() {
     });
     focus = null;
 }
+
+// Ensure the game resizes properly when the window is resized
+function windowResized() {
+    let canvasWidth = window.innerWidth * 0.9; // 90% of the screen width
+    let canvasHeight = window.innerHeight * 0.9; // 90% of the screen height
+    resizeCanvas(canvasWidth, canvasHeight);
+}
+
 
 // Start game function
 function startGame() {
