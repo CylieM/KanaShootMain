@@ -23,10 +23,13 @@
     <button id="startButton" style="position: absolute; top: 50%; left: 50%;">Tap to Start</button>
     <button id="playAgainButton" style="display: none; position: absolute; top: 60%; left: 45%;">Play Again</button>
     <button id="quitButton" style="display: none; position: absolute; top: 70%; left: 45%;">Quit</button>
-
+	<audio id="popSound" src="pop.wav"></audio>
+	<audio id="lazerSound" src="lazer.mp3"></audio>
     <script type="text/javascript" src="lib/p5min.js"></script>
     <script type="text/javascript" src="Asteroid.js"></script>
     <script type="text/javascript" src="KanaShoot.js"></script>
+
+
 <script>
     // Move this part outside the startButton click event handler
     var hiddenInput = document.getElementById('hiddenInput');
