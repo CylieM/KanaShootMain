@@ -246,7 +246,6 @@ const WAVE_DATA = [
     { kana: "こえ", romaji: "koe" } // voice
 ]
 ];
-
 var focus; // Asteroid the player is currently typing out
 var field = [];
 var score = 0;
@@ -258,6 +257,8 @@ var planetCrust; // color of crust
 var planetMantle; // color of mantle
 var ship; // color of ship
 var asteroidsDisplayed = 0;
+var asteroidsDestroyed = 0; // Count of destroyed asteroids
+var asteroidsToDestroy = 0; // Number of asteroids to destroy to proceed to the next wave
 var gameStarted = false;
 var wordIndex = 0;
 var waveDataShuffled = []; // Array to hold shuffled wave data
@@ -276,6 +277,8 @@ function startNewWave() {
     waveDataShuffled = [...WAVE_DATA[currentWave]];
     shuffleArray(waveDataShuffled);
     asteroidsDisplayed = 0;
+    asteroidsDestroyed = 0;
+    asteroidsToDestroy = Math.floor(Math.random() * 11) + 10; // Pick a random number between 10 and 20
     wordIndex = 0;
     waveDisplayStartTime = millis();
     waveStartTime = millis();
@@ -283,12 +286,7 @@ function startNewWave() {
 
 // Setup function
 function setup() {
-    // Set canvas width and height to fit within the mobile screen
-    let canvasWidth = window.innerWidth * 0.9; // 90% of the screen width
-    let canvasHeight = window.innerHeight * 0.9; // 90% of the screen height
-    createCanvas(canvasWidth, canvasHeight);
-
-    // Initialize game elements
+    createCanvas(500, 500);
     planetCrust = randomColor();
     planetMantle = randomColor();
     ship = randomColor();
@@ -299,14 +297,6 @@ function setup() {
     });
     focus = null;
 }
-
-// Ensure the game resizes properly when the window is resized
-function windowResized() {
-    let canvasWidth = window.innerWidth * 0.9; // 90% of the screen width
-    let canvasHeight = window.innerHeight * 0.9; // 90% of the screen height
-    resizeCanvas(canvasWidth, canvasHeight);
-}
-
 
 // Start game function
 function startGame() {
@@ -322,6 +312,7 @@ function draw() {
         textAlign(CENTER);
         textSize(32);
         text('Press "Start" to begin', width / 2, height / 4);
+        text('make sure your screen fits properly', width / 2, height / 2);
         return;
     }
 
@@ -331,21 +322,21 @@ function draw() {
     drawScore();
     handleField();
 
+
+	
     console.log("Asteroids Displayed:", asteroidsDisplayed);
     console.log("Word Index:", wordIndex);
     console.log("Current Wave Length:", waveDataShuffled.length);
 
-    if (field.length === 0) {
-        if (asteroidsDisplayed >= waveDataShuffled.length) {
-            currentWave++;
-            if (currentWave >= WAVE_DATA.length) {
-                textAlign(CENTER);
-                textSize(80);
-                text("Congrats! You completed the game!", width / 2, height / 2);
-                noLoop();
-            } else {
-                startNewWave(); // Start the next wave with shuffled asteroids
-            }
+    if (asteroidsDestroyed >= asteroidsToDestroy) {
+        currentWave++;
+        if (currentWave >= WAVE_DATA.length) {
+            textAlign(CENTER);
+            textSize(80);
+            text("Congrats! You completed the game!", width / 2, height / 2);
+            noLoop();
+        } else {
+            startNewWave(); // Start the next wave with shuffled asteroids
         }
     }
 
@@ -362,6 +353,7 @@ function handleField() {
         field[i].update();
         if (!field[i].intact) {
             score += field[i].word.romaji.length;
+            asteroidsDestroyed++; // Increment the count of destroyed asteroids
             field.splice(i, 1);
             focus = null;
         } else {
@@ -375,7 +367,7 @@ function handleField() {
     console.log("Current Asteroids Displayed:", asteroidsDisplayed);
     console.log("Current Word Index:", wordIndex);
     console.log("Asteroids to be Created:", waveDataShuffled.length - asteroidsDisplayed);
-	const asteroidCreationInterval = 2000;
+    const asteroidCreationInterval = 2000;
     if (millis() - lastAsteroidTime > asteroidCreationInterval) {
         if (asteroidsDisplayed < waveDataShuffled.length && wordIndex < waveDataShuffled.length) {
             console.log("Creating New Asteroid");
@@ -383,22 +375,6 @@ function handleField() {
             wordIndex++;
             asteroidsDisplayed++;
             lastAsteroidTime = millis();
-        }
-
-        // Check if the wave is completed
-        if (asteroidsDisplayed >= waveDataShuffled.length && field.length === 0) {
-            currentWave++;
-            wordIndex = 0;
-            asteroidsDisplayed = 0;
-            waveDisplayStartTime = millis();
-            if (currentWave >= WAVE_DATA.length) {
-                textAlign(CENTER);
-                textSize(80);
-                text("Congrats! You completed the game!", width / 2, height / 2);
-                noLoop();
-            } else {
-                startNewWave(); // Start the next wave with shuffled asteroids
-            }
         }
     }
 
@@ -467,15 +443,13 @@ function randomColor() {
     return color(random(128, 255), random(128, 255), random(128, 255)); // RGB values between 128 and 255 for lighter colors
 }
 
-
-
 function endGame() {
     noLoop();
     fill(255);
     noStroke();
     textAlign(CENTER);
     textSize(19);
-    text("Game Over! You reached wave " + currentWave + " with a score of " + score, width / 2, height / 2);
+    text("Game Over! You reached wave " + (currentWave + 1) + " with a score of " + score, width / 2, height / 2);
     document.getElementById('playAgainButton').style.display = 'block';
     document.getElementById('quitButton').style.display = 'block';
     Android.onGameEnded(currentWave, score);
