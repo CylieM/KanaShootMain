@@ -2,7 +2,8 @@ function Asteroid(x, y, word, color) {
     this.position = createVector(x, y);
     this.color = color;
     this.word = word;
-    this.size = Math.max(60, word.kana.length * 15); // Adjust size based on kana length with a minimum size
+    // Calculate size with a smaller minimum size for single kana characters and a larger size for multi-character kana
+    this.size = Math.max(30, word.kana.length * 15); // Adjust size based on kana length with a minimum size
     this.completedText = "";
     this.intact = true;
 }
