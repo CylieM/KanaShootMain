@@ -301,6 +301,9 @@ function setup() {
         handleInput(keyPressed);
     });
     focus = null;
+	 // Hide the Play Again and Quit buttons initially
+    document.getElementById('playAgainButton').style.display = 'none';
+    document.getElementById('quitButton').style.display = 'none';
 }
 // Ensure the game resizes properly when the window is resized
 function windowResized() {
