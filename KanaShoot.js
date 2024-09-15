@@ -249,7 +249,7 @@ const WAVE_DATA = [
 var focus; // Asteroid the player is currently typing out
 var field = [];
 var score = 0;
-var currentWave = 0;
+var currentWave = 1;
 var lastAsteroidTime = 0;
 var waveStartTime = 0;
 var waveDisplayStartTime = 0;
@@ -355,7 +355,7 @@ function draw() {
     if (millis() - waveDisplayStartTime < 3000) {
         textAlign(CENTER);
         textSize(80);
-        text("WAVE " + (currentWave + 1), width / 2, height / 2);
+        text("WAVE " + currentWave, width / 2, height / 2);
     }
 }
 
@@ -393,7 +393,7 @@ function handleField() {
     if (millis() - waveDisplayStartTime < 3000) {
         textAlign(CENTER);
         textSize(80);
-        text("WAVE " + (currentWave + 1), width / 2, height / 2);
+        text("WAVE " + currentWave, width / 2, height / 2);
     }
 }
 
@@ -461,7 +461,7 @@ function endGame() {
     noStroke();
     textAlign(CENTER);
     textSize(19);
-    text("Game Over! You reached wave " + (currentWave + 1) + " with a score of " + score, width / 2, height / 2);
+    text("Game Over! You reached wave " + currentWave + " with a score of " + score, width / 2, height / 2);
     document.getElementById('playAgainButton').style.display = 'block';
     document.getElementById('quitButton').style.display = 'block';
     Android.onGameEnded(currentWave, score);
