@@ -397,21 +397,39 @@ function handleField() {
     }
 }
 
-// Handle input function
-function handleInput(event) {
-    var key = event.data;
+var input = event.target.value; // Get the current value of the input field
+
+    // Only process if the game has started
     if (!gameStarted) return;
-    playPopSound();
+
+    // Append the new character to the accumulated input
+    accumulatedInput += input;
+    event.target.value = ''; // Clear the input field
+
+    // Check if the accumulated input matches any Romaji in the current wave
     if (focus) {
-        focus.erode(key.charCodeAt(0));
+        if (focus.word.romaji.startsWith(accumulatedInput)) {
+            // If the accumulated input is a prefix of the Romaji word, continue eroding
+            focus.erode(accumulatedInput.charCodeAt(accumulatedInput.length - 1));
+        } else {
+            // Reset accumulated input if it doesn't match
+            accumulatedInput = '';
+            focus = null;
+        }
     } else {
-        focus = findAsteroid(key.charCodeAt(0), field);
+        focus = findAsteroid(accumulatedInput.charCodeAt(0), field);
         if (focus) {
-            focus.erode(key.charCodeAt(0));
+            focus.erode(accumulatedInput.charCodeAt(0));
         }
     }
-}
 
+    // If the accumulated input matches the full Romaji word, reset accumulated input
+    if (focus && focus.completedText === focus.word.romaji) {
+        accumulatedInput = '';
+    }
+
+    playPopSound();
+}
 // Draw base function
 function drawBase() {
     fill(planetMantle);
