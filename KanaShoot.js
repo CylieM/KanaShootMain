@@ -396,8 +396,8 @@ function handleField() {
         text("WAVE " + (currentWave + 1), width / 2, height / 2);
     }
 }
-
-var input = event.target.value; // Get the current value of the input field
+function handleInput(event) {
+    var input = event.target.value; // Get the current value of the input field
 
     // Only process if the game has started
     if (!gameStarted) return;
