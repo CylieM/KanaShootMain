@@ -271,7 +271,7 @@ function shuffleArray(array) {
     }
 }
 
-// Function to start a new wave with shuffled asteroids
+/ Function to start a new wave with shuffled asteroids
 function startNewWave() {
     // Shuffle the wave data for the current wave
     waveDataShuffled = [...WAVE_DATA[currentWave]];
@@ -396,40 +396,22 @@ function handleField() {
         text("WAVE " + (currentWave + 1), width / 2, height / 2);
     }
 }
+
+// Handle input function
 function handleInput(event) {
-    var input = event.target.value; // Get the current value of the input field
-
-    // Only process if the game has started
+    var key = event.data;
     if (!gameStarted) return;
-
-    // Append the new character to the accumulated input
-    accumulatedInput += input;
-    event.target.value = ''; // Clear the input field
-
-    // Check if the accumulated input matches any Romaji in the current wave
-    if (focus) {
-        if (focus.word.romaji.startsWith(accumulatedInput)) {
-            // If the accumulated input is a prefix of the Romaji word, continue eroding
-            focus.erode(accumulatedInput.charCodeAt(accumulatedInput.length - 1));
-        } else {
-            // Reset accumulated input if it doesn't match
-            accumulatedInput = '';
-            focus = null;
-        }
-    } else {
-        focus = findAsteroid(accumulatedInput.charCodeAt(0), field);
-        if (focus) {
-            focus.erode(accumulatedInput.charCodeAt(0));
-        }
-    }
-
-    // If the accumulated input matches the full Romaji word, reset accumulated input
-    if (focus && focus.completedText === focus.word.romaji) {
-        accumulatedInput = '';
-    }
-
     playPopSound();
+    if (focus) {
+        focus.erode(key.charCodeAt(0));
+    } else {
+        focus = findAsteroid(key.charCodeAt(0), field);
+        if (focus) {
+            focus.erode(key.charCodeAt(0));
+        }
+    }
 }
+
 // Draw base function
 function drawBase() {
     fill(planetMantle);
