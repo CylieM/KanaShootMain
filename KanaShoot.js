@@ -5,7 +5,7 @@ const WAVE_DATA = [
         { kana: "う", romaji: "u" },
         { kana: "え", romaji: "e" },
         { kana: "お", romaji: "o" },
-        
+
         { kana: "か", romaji: "ka" },
         { kana: "き", romaji: "ki" },
         { kana: "く", romaji: "ku" },
@@ -17,43 +17,43 @@ const WAVE_DATA = [
         { kana: "ふ", romaji: "fu" },
         { kana: "へ", romaji: "he" },
         { kana: "ほ", romaji: "ho" },
-        
+
         { kana: "ま", romaji: "ma" },
         { kana: "み", romaji: "mi" },
         { kana: "む", romaji: "mu" },
         { kana: "め", romaji: "me" },
         { kana: "も", romaji: "mo" },
-        
+
         { kana: "な", romaji: "na" },
         { kana: "に", romaji: "ni" },
         { kana: "ぬ", romaji: "nu" },
         { kana: "ね", romaji: "ne" },
         { kana: "の", romaji: "no" },
-        
+
         { kana: "ら", romaji: "ra" },
         { kana: "り", romaji: "ri" },
         { kana: "る", romaji: "ru" },
         { kana: "れ", romaji: "re" },
         { kana: "ろ", romaji: "ro" },
-        
+
         { kana: "さ", romaji: "sa" },
         { kana: "し", romaji: "shi" },
         { kana: "す", romaji: "su" },
         { kana: "せ", romaji: "se" },
         { kana: "そ", romaji: "so" },
-        
+
         { kana: "た", romaji: "ta" },
         { kana: "ち", romaji: "chi" },
         { kana: "つ", romaji: "tsu" },
         { kana: "て", romaji: "te" },
         { kana: "と", romaji: "to" },
-        
+
         { kana: "や", romaji: "ya" },
         { kana: "ゆ", romaji: "yu" },
         { kana: "よ", romaji: "yo" },
         { kana: "わ", romaji: "wa" },
         { kana: "を", romaji: "wo" },
-        
+
         { kana: "ん", romaji: "n" },
     ],
     [
@@ -62,7 +62,7 @@ const WAVE_DATA = [
         { kana: "ウ", romaji: "u" },
         { kana: "エ", romaji: "e" },
         { kana: "オ", romaji: "o" },
-        
+
         { kana: "カ", romaji: "ka" },
         { kana: "キ", romaji: "ki" },
         { kana: "ク", romaji: "ku" },
@@ -271,7 +271,7 @@ function shuffleArray(array) {
     }
 }
 
-/ Function to start a new wave with shuffled asteroids
+// Function to start a new wave with shuffled asteroids
 function startNewWave() {
     // Shuffle the wave data for the current wave
     waveDataShuffled = [...WAVE_DATA[currentWave]];
@@ -335,7 +335,7 @@ function draw() {
     handleField();
 
 
-	
+
     console.log("Asteroids Displayed:", asteroidsDisplayed);
     console.log("Word Index:", wordIndex);
     console.log("Current Wave Length:", waveDataShuffled.length);
@@ -393,6 +393,7 @@ function handleField() {
     if (millis() - waveDisplayStartTime < 3000) {
         textAlign(CENTER);
         textSize(80);
+
         text("WAVE " + (currentWave + 1), width / 2, height / 2);
     }
 }
@@ -461,9 +462,11 @@ function endGame() {
     noStroke();
     textAlign(CENTER);
     textSize(19);
+
     text("Game Over! You reached wave " + (currentWave + 1) + " with a score of " + score, width / 2, height / 2);
     document.getElementById('playAgainButton').style.display = 'block';
     document.getElementById('quitButton').style.display = 'block';
+
     Android.onGameEnded((currentWave + 1), score);
 }
 
