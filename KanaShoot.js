@@ -324,7 +324,7 @@ function draw() {
         fill(255);
         textAlign(CENTER);
         textSize(10);
-        text('Turn off predictive text (Settings->Keyboard) and Press "Start" to begin', height / 5); 
+        text('Turn off predictive text (Settings->Keyboard) and Press "Start" to begin',width /5, height / 5); 
         return;
     }
 
