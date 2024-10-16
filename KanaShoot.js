@@ -324,7 +324,7 @@ function draw() {
         fill(255);
         textAlign(CENTER);
         textSize(32);
-        text('Press "Start" to begin', width / 2, height / 4);
+        text('Turn off predictive text and Press "Start" to begin', width / 3, height / 5);
         return;
     }
 
