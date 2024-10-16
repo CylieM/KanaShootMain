@@ -324,9 +324,16 @@ function draw() {
         fill(255);
         textAlign(CENTER);
         textSize(10);
-        text('Turn off predictive text (Settings->Keyboard) and Press "Start" to begin', width / 3, height / 5); 
+        
+        // Position for the first message
+        text('Turn off predictive text (Settings->Keyboard)', width / 2, height / 5);
+        
+        // Position for the second message, below the first
+        text('Press "Start" to begin', width / 2, height / 5 + 15); // Adjust the offset as needed
+        
         return;
     }
+}
 
 
     background(51);
