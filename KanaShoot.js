@@ -319,23 +319,12 @@ function startGame() {
 
 // Draw function
 function draw() {
-if (!gameStarted) {
+    if (!gameStarted) {
         background(0);
         fill(255);
         textAlign(CENTER);
-        textSize(32);
-        
-        // Set the width for text wrapping
-        let textWidth = width * 0.8; // 80% of the canvas width
-
-        // Enable text wrapping
-        textWrap(WORD);
-
-        // Adjust text position to be more centered vertically
-        let textX = width / 2;
-        let textY = height / 4;
-
-        text('Turn off predictive text (Settings->Keyboard) and Press "Start" to begin', textX, textY, textWidth);
+        textSize(10);
+        text('Turn off predictive text (Settings->Keyboard) and Press "Start" to begin', width / 3, height / 5); 
         return;
     }
 
